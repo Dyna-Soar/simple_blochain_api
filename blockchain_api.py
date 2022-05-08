@@ -1,3 +1,4 @@
+import flask
 from flask import Flask
 import json
 
@@ -10,13 +11,12 @@ chain_test = Blockchain()
 
 @app.route("/")
 def show_blockchain():
-    blockchain_chain = chain_test.get_blockchain()
-    return "<p>" + str(blockchain_chain) + "</p>"
+    response = chain_test.get_json_blockchain()
+    return response, 200
 
 
 @app.route("/mine_block")
 def mine_block():
     chain_test.add_block()
-    blockchain_chain = chain_test.get_blockchain()
-    print(blockchain_chain)
-    return "<p>" + str(blockchain_chain) + "</p>"
+    response = chain_test.get_json_blockchain()
+    return response, 200

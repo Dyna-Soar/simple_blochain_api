@@ -1,5 +1,6 @@
 import datetime
 import hashlib
+import json
 
 
 class Blockchain:
@@ -10,6 +11,10 @@ class Blockchain:
 
     def get_blockchain(self):
         return self.list_blocks
+
+    def get_json_blockchain(self):
+        list_dicts_blockchain = [block.block_dict() for block in self.list_blocks]
+        return json.dumps(list_dicts_blockchain, indent=4, sort_keys=True, default=str)
 
     def get_latest_block(self):
         return self.list_blocks[-1]
@@ -27,6 +32,14 @@ class Block:
 
     def __repr__(self):
         return f'timestamp: {self.timestamp}, previous hash: {self.previous_hash}, hash: {self.hash}'
+
+    def block_dict(self):
+        dict_block = {"timestamp": self.timestamp, "previous_hash": self.previous_hash, "hash": self.hash}
+        return dict_block
+
+    def toJSON(self):
+        dict_block = {"timestamp": self.timestamp, "previous_hash": self.previous_hash, "hash": self.hash}
+        return json.dumps(dict_block)
 
     def hashing_v2(self, timestamp, previous_hash):
         nonce = 1
